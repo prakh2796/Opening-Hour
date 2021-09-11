@@ -1,0 +1,21 @@
+package com.example.wolt.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TimeDto {
+    private String type;
+    private Integer value;
+
+    @Override
+    public String toString() {
+        return "Time{" +
+                "type='" + type + '\'' +
+                ", value=" + value +
+                '}';
+    }
+}
