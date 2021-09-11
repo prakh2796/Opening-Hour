@@ -21,8 +21,14 @@ public class ExceptionHelper {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionHelper.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ServiceResponse> handleException(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ServiceResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         logger.info("Invalid JSON String with exception: {}", exception.toString());
         return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ServiceResponse> handleException(Exception exception) {
+        logger.info("Internal Server Error: ", exception.toString());
+        return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.SOMETHING_WENT_WRONG), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

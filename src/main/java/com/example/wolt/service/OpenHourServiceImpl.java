@@ -27,13 +27,19 @@ public class OpenHourServiceImpl implements IOpenHourService {
     private static final Logger logger = LoggerFactory.getLogger(OpenHourServiceImpl.class);
 
     @Autowired
-    ObjectMapper mapper;
-    @Autowired
     OpenHourValidation openHourValidation;
 
     @Override
     public ResponseEntity<ServiceResponse> getReadableOpenHours(InputTimeDto inputTimeDto) {
         logger.info("Validating input JSON");
+        if(!openHourValidation.validateType(inputTimeDto)) {
+            logger.info("Incorrect type provided");
+            return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING), HttpStatus.BAD_REQUEST);
+        }
+        if(!openHourValidation.validateValue(inputTimeDto)) {
+            logger.info("Invalid value provided");
+            return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING), HttpStatus.BAD_REQUEST);
+        }
         if(!openHourValidation.validateOpenCloseHour(inputTimeDto)) {
             logger.info("Invalid JSON: Incorrect open-close format");
             return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING), HttpStatus.BAD_REQUEST);
@@ -41,13 +47,13 @@ public class OpenHourServiceImpl implements IOpenHourService {
         logger.info("JSON Validation Successful");
         LinkedHashMap<String, String> response = new LinkedHashMap<>();
         try {
-            response.put(Constants.MONDAY, processOpenHours(new JSONArray(inputTimeDto.getMonday()), Constants.MONDAY, response));
-            response.put(Constants.TUESDAY, processOpenHours(new JSONArray(inputTimeDto.getTuesday()), Constants.TUESDAY, response));
-            response.put(Constants.WEDNESDAY, processOpenHours(new JSONArray(inputTimeDto.getWednesday()), Constants.WEDNESDAY, response));
-            response.put(Constants.THURSDAY, processOpenHours(new JSONArray(inputTimeDto.getThursday()), Constants.THURSDAY, response));
-            response.put(Constants.FRIDAY, processOpenHours(new JSONArray(inputTimeDto.getFriday()), Constants.FRIDAY, response));
-            response.put(Constants.SATURDAY, processOpenHours(new JSONArray(inputTimeDto.getSaturday()), Constants.SATURDAY, response));
-            response.put(Constants.SUNDAY, processOpenHours(new JSONArray(inputTimeDto.getSunday()), Constants.SUNDAY, response));
+            response.put(Constants.MONDAY, processOpenHours(inputTimeDto.getMonday(), Constants.MONDAY, response));
+            response.put(Constants.TUESDAY, processOpenHours(inputTimeDto.getTuesday(), Constants.TUESDAY, response));
+            response.put(Constants.WEDNESDAY, processOpenHours(inputTimeDto.getWednesday(), Constants.WEDNESDAY, response));
+            response.put(Constants.THURSDAY, processOpenHours(inputTimeDto.getThursday(), Constants.THURSDAY, response));
+            response.put(Constants.FRIDAY, processOpenHours(inputTimeDto.getFriday(), Constants.FRIDAY, response));
+            response.put(Constants.SATURDAY, processOpenHours(inputTimeDto.getSaturday(), Constants.SATURDAY, response));
+            response.put(Constants.SUNDAY, processOpenHours(inputTimeDto.getSunday(), Constants.SUNDAY, response));
         } catch (Exception e) {
             logger.info("Error Processing JSON");
             return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.ERROR_PROCESSING), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,10 +62,9 @@ public class OpenHourServiceImpl implements IOpenHourService {
         return new ResponseEntity<ServiceResponse>(new SuccessResponse(response), HttpStatus.OK);
     }
 
-    public String processOpenHours(JSONArray jsonOpenHourObj, String day, LinkedHashMap<String, String> response) throws IOException {
+    public String processOpenHours(List<TimeDto> openHoursList, String day, LinkedHashMap<String, String> response) {
         logger.info("Processing open hour for {}", day);
         StringBuilder builder = new StringBuilder();
-        List<TimeDto> openHoursList = Arrays.asList(mapper.readValue(jsonOpenHourObj.toString(), TimeDto[].class));
         if (openHoursList.size() > 0) {
             for (int i = 0; i < openHoursList.size(); i++) {
                 if (i == 0 && openHoursList.get(i).getType().equalsIgnoreCase(Type.CLOSE.name())) {

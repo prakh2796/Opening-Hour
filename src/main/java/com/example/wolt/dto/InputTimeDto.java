@@ -5,24 +5,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class InputTimeDto {
     @NotNull
-    private ArrayList<TimeDto> Monday;
+    private List<TimeDto> Monday;
     @NotNull
-    private ArrayList<TimeDto> Tuesday;
+    private List<TimeDto> Tuesday;
     @NotNull
-    private ArrayList<TimeDto> Wednesday;
+    private List<TimeDto> Wednesday;
     @NotNull
-    private ArrayList<TimeDto> Thursday;
+    private List<TimeDto> Thursday;
     @NotNull
-    private ArrayList<TimeDto> Friday;
+    private List<TimeDto> Friday;
     @NotNull
-    private ArrayList<TimeDto> Saturday;
+    private List<TimeDto> Saturday;
     @NotNull
-    private ArrayList<TimeDto> Sunday;
+    private List<TimeDto> Sunday;
 }
