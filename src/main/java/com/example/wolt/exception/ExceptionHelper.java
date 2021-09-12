@@ -19,7 +19,7 @@ public class ExceptionHelper {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ServiceResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         logger.info("Invalid JSON String with exception: {}", exception.toString());
-        return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING + ". " + Constants.DAY_MSSING), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
