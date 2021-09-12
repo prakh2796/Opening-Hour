@@ -178,17 +178,17 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
 
    ```bash
      {
-    "timeStamp": <timestamp>,
-    "status": "success",
-    "message": "Operation Successful",
-    "data": {
-        "Monday": "Closed",
-        "Tuesday": "10:00 AM - 6:00 PM",
-        "Wednesday": "Closed",
-        "Thursday": "10:30 AM - 6:00 PM",
-        "Friday": "6:00 PM - 1:00 AM",
-        "Saturday": "9:00 AM - 11:00 AM, 4:00 PM - 11:00 PM",
-        "Sunday": "12:00 PM - 9:00 PM"
+        "timeStamp": <timestamp>,
+        "status": "success",
+        "message": "Operation Successful",
+        "data": {
+            "Monday": "Closed",
+            "Tuesday": "10:00 AM - 6:00 PM",
+            "Wednesday": "Closed",
+            "Thursday": "10:30 AM - 6:00 PM",
+            "Friday": "6:00 PM - 1:00 AM",
+            "Saturday": "9:00 AM - 11:00 AM, 4:00 PM - 11:00 PM",
+            "Sunday": "12:00 PM - 9:00 PM"
+        }
     }
-}
    ```
