@@ -2,10 +2,12 @@
 
 ### Problem Statement
 
-The code in this repository contains a simple REST API that receives JSON data as input
-and returns a human readable output as response. The data received is structured
-JSON of opening hours for a restaurant and this information gets coerced into a
+Build a simple REST API that receives JSON data as input and returns a human readable output as response. The data received is structured
+JSON of opening hours for a restaurant and this information gets parsed into a
 text understood by humans.
+
+### Assumptions
+1. The restaurant follows the format open-close-open i.e. before reopening the restaurant shall be in a closed state and vice versa.
 
 ### Solution
 
@@ -99,19 +101,17 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
 
 ### Running and testing the solution
 
-#### Steps to follow
+1. Install `jdk 1.8` and `maven 3.3.3`
+2. Clone/Download the repository `Opening-Hour`
+3. Open terminal/cmd and run `cd <path_to_Opening-Hour_directory>`
+4. run `mvn clean install`
+5. run `mvn spring-boot:run`
+6. Open `http://localhost:8080/swagger-ui/` in browser.
+4. Try out the `/open-hour/convert` POST endpoint in open-hour-controller with the following as inputTimeDto
 
-The steps listed below assume you are running from a linux shell (Bash), adapt the instructions for your platform.
-
-1. Clone this repository `opening-hours`
-
-4. From a different shell make an HTTP request
-
-    ```bash
-    > curl --location --request POST 'http://localhost:8080/opening-hours' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "tuesday": [
+    ```
+    {
+    "tuesday": [
             {
                 "type": "open",
                 "value": 36000
@@ -136,7 +136,7 @@ The steps listed below assume you are running from a linux shell (Bash), adapt t
         "friday": [
             {
                 "type": "open",
-                "value": 36000
+                "value": 64800
             }
         ],
         "saturday": [
@@ -146,14 +146,22 @@ The steps listed below assume you are running from a linux shell (Bash), adapt t
             },
             {
                 "type": "open",
-                "value": 36000
+                "value": 32400
+            },
+            {
+                "type": "close",
+                "value": 39600
+            },
+            {
+                "type": "open",
+                "value": 57600
+            },
+            {
+                "type": "close",
+                "value": 82800
             }
         ],
         "sunday": [
-            {
-                "type": "close",
-                "value": 3600
-            },
             {
                 "type": "open",
                 "value": 43200
@@ -163,17 +171,24 @@ The steps listed below assume you are running from a linux shell (Bash), adapt t
                 "value": 75600
             }
         ]
-    }'
+    }
     ```
 
    You should get the following output
 
    ```bash
-     Monday: Closed
-     Tuesday: 10 AM - 6 PM
-     Wednesday: Closed
-     Thursday: 10:30 AM - 6 PM
-     Friday: 10 AM - 1 AM
-     Saturday: 10 AM - 1 AM
-     Sunday: 12 PM - 9 PM
+     {
+    "timeStamp": <timestamp>,
+    "status": "success",
+    "message": "Operation Successful",
+    "data": {
+        "Monday": "Closed",
+        "Tuesday": "10:00 AM - 6:00 PM",
+        "Wednesday": "Closed",
+        "Thursday": "10:30 AM - 6:00 PM",
+        "Friday": "6:00 PM - 1:00 AM",
+        "Saturday": "9:00 AM - 11:00 AM, 4:00 PM - 11:00 PM",
+        "Sunday": "12:00 PM - 9:00 PM"
+    }
+}
    ```
