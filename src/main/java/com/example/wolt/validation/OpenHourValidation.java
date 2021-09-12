@@ -23,6 +23,11 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
         return openHoursList;
     }
 
+    /**
+     *
+     * @param inputTimeDto Open Hours DTO
+     * @return true if Open Hours DTO contains Time DTO following the order open-close-open
+     */
     @Override
     public boolean validateOpenCloseHour(InputTimeDto inputTimeDto) {
         List<List<TimeDto>> openHoursList = getOpenHoursList(inputTimeDto);
@@ -41,6 +46,11 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
         return true;
     }
 
+    /**
+     *
+     * @param inputTimeDto Open Hours DTO
+     * @return true if Open Hours DTO contains type as either open or close
+     */
     @Override
     public boolean validateType(InputTimeDto inputTimeDto) {
         List<List<TimeDto>> openHoursList = getOpenHoursList(inputTimeDto);
@@ -50,6 +60,11 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
         return typeList.equals(new HashSet<>(Arrays.asList("open", "close")));
     }
 
+    /**
+     *
+     * @param inputTimeDto Open Hours DTO
+     * @return true if Open Hours DTO contains value ranging between [0, 86399]
+     */
     @Override
     public boolean validateValue(InputTimeDto inputTimeDto) {
         List<List<TimeDto>> openHoursList = getOpenHoursList(inputTimeDto);

@@ -16,6 +16,11 @@ public class OpenHourController {
     @Autowired
     IOpenHourService openHourService;
 
+    /**
+     *
+     * @param inputTimeDto Open Hours DTO
+     * @return Service Response
+     */
     @PostMapping("/convert")
     public ResponseEntity<ServiceResponse> hotelTiming(@Valid @RequestBody InputTimeDto inputTimeDto) {
         return openHourService.getReadableOpenHours(inputTimeDto);

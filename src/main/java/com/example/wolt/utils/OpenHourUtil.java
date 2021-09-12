@@ -5,6 +5,12 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class OpenHourUtil {
+
+    /**
+     *
+     * @param unixValue unix value
+     * @return Date in h:mm a format
+     */
     public static String convertUnixTimeToDate(long unixValue) {
         Date date = new Date(unixValue * 1000L);
 
@@ -13,21 +19,26 @@ public class OpenHourUtil {
         return dateFormat.format(date);
     }
 
+    /**
+     *
+     * @param day day of the week
+     * @return previous day of the week
+     */
     public static String lookupPreviousDay(String day){
         if(day.equalsIgnoreCase("monday")){
-            return "Sunday";
+            return Constants.SUNDAY;
         }if(day.equalsIgnoreCase("tuesday")){
-            return "Monday";
+            return Constants.MONDAY;
         }if(day.equalsIgnoreCase("wednesday")){
-            return "Tuesday";
+            return Constants.TUESDAY;
         }if(day.equalsIgnoreCase("thursday")){
-            return "Wednesday";
+            return Constants.WEDNESDAY;
         }if(day.equalsIgnoreCase("friday")){
-            return "Thursday";
+            return Constants.THURSDAY;
         }if(day.equalsIgnoreCase("saturday")){
-            return "Friday";
+            return Constants.FRIDAY;
         }if(day.equalsIgnoreCase("sunday")){
-            return "Saturday";
+            return Constants.SATURDAY;
         }
         return "";
     }

@@ -9,8 +9,6 @@ import com.example.wolt.enums.Type;
 import com.example.wolt.utils.Constants;
 import com.example.wolt.utils.OpenHourUtil;
 import com.example.wolt.validation.OpenHourValidation;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -29,6 +26,11 @@ public class OpenHourServiceImpl implements IOpenHourService {
     @Autowired
     OpenHourValidation openHourValidation;
 
+    /**
+     *
+     * @param inputTimeDto Open Hours DTO
+     * @return Service Response
+     */
     @Override
     public ResponseEntity<ServiceResponse> getReadableOpenHours(InputTimeDto inputTimeDto) {
         logger.info("Validating input JSON");
@@ -62,6 +64,13 @@ public class OpenHourServiceImpl implements IOpenHourService {
         return new ResponseEntity<ServiceResponse>(new SuccessResponse(response), HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param openHoursList Time DTO for a particular day of the week
+     * @param day day of the week
+     * @param response Human readable open hour format for a particular day
+     * @return
+     */
     public String processOpenHours(List<TimeDto> openHoursList, String day, LinkedHashMap<String, String> response) {
         logger.info("Processing open hour for {}", day);
         StringBuilder builder = new StringBuilder();
