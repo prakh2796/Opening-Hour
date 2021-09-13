@@ -38,14 +38,17 @@ public class OpenHourServiceImpl implements IOpenHourService {
             logger.info("Incorrect type provided");
             return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING + ". " + Constants.INVALID_TYPE), HttpStatus.BAD_REQUEST);
         }
+        logger.info("Type validation successful");
         if(!openHourValidation.validateValue(inputTimeDto)) {
             logger.info("Invalid value provided");
             return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING + ". " + Constants.INVALID_VALUE), HttpStatus.BAD_REQUEST);
         }
+        logger.info("Value validation successful");
         if(!openHourValidation.validateOpenCloseHour(inputTimeDto)) {
             logger.info("Invalid JSON: Incorrect open-close format");
             return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.INVALID_JSON_STRING + ". " + Constants.INVALID_OPEN_CLOSE_HOUR_FORMAT), HttpStatus.BAD_REQUEST);
         }
+        logger.info("Open CLose Hour validation successful");
         logger.info("JSON Validation Successful");
         LinkedHashMap<String, String> response = new LinkedHashMap<>();
         try {
