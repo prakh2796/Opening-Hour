@@ -7,7 +7,9 @@ JSON of opening hours for a restaurant and this information gets parsed into a
 text understood by humans.
 
 ### Assumptions
-1. The restaurant follows the format open-close-open i.e. before reopening the restaurant shall be in a closed state and vice versa.
+
+1. The input JSON shall contain all the 7 days of the week(in any order).
+2. The restaurant follows the format open-close-open i.e., before reopening the restaurant it shall be in a closed state and vice versa.
 
 ### Solution
 
@@ -111,7 +113,7 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
 
     ```
     {
-    "tuesday": [
+        "tuesday": [
             {
                 "type": "open",
                 "value": 36000
@@ -192,3 +194,38 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
         }
     }
    ```
+   
+### Thoughts on Data Format
+
+1. Information should be given based on the open and closing operation.
+   If 'open'/'close' states are the only possible ones, and they alternate always,
+   then we can have a simple array [open_time,close_time, ...] as a day schedule.
+   Also, such an approach would let us avoid mistakes when a client sends
+   a request with invalid states changes such as 'close -> close'.
+2. When the closing hour happens to be on the next day, it should accompany 
+   it no matter the day it is. Rather the day should be indicated within the data.
+
+Example JSON for the above thoughts
+```
+    {
+      "monday": [
+        {
+          "open": 72000,
+          "close": 3600,
+          "nextDay": true
+        }
+      ],
+      "tuesday": [
+        {
+          "open": 32400,
+          "close": 39600,
+          "nextDay": false
+        },
+        {
+          "open": 57600,
+          "close": 82800,
+          "nextDay": false
+        }
+      ] 
+    }
+```
