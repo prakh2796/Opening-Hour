@@ -99,6 +99,8 @@ public class OpenHourServiceImpl implements IOpenHourService {
             logger.info("Restaurant closed!");
             builder.append("Closed");
         }
+        if(builder.length() == 0)
+            builder.append("Closed");
         if(builder.charAt(builder.length()-2) == ',')
             builder.deleteCharAt(builder.length()-2);
         return builder.toString().trim();

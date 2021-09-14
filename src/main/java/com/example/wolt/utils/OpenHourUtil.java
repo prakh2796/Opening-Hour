@@ -21,8 +21,8 @@ public class OpenHourUtil {
 
     /**
      *
-     * @param day day of the week
-     * @return previous day of the week
+     * @param day day of the week(Day starts from MONDAY(0))
+     * @return previous day of the week. If day is 0 then the previous day is 6.
      */
     public static int lookupPreviousDay(int day) {
         if(day == 0)

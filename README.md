@@ -10,6 +10,7 @@ text understood by humans.
 
 1. The input JSON shall contain all the 7 days of the week(in any order). If not then it's an Invalid JSON.
 2. The restaurant follows the format open-close-open i.e., before reopening the restaurant it shall be in a closed state and vice versa.  If not then it's an Invalid JSON.
+3. The restaurant doesn't operate for more than 24 hours in a single open-close interval.
 
 ### Solution
 
@@ -229,3 +230,4 @@ Example JSON for the above thoughts
       ] 
     }
 ```
+3. The input JSON can't handle the case when a restaurant runs for more than 24 hours in a single open-close interval.

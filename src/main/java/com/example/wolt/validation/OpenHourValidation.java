@@ -34,14 +34,16 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
         List<String> openCloseList = openHoursList.stream()
                 .flatMap(list -> list.stream().map(k -> k.getType()))
                 .collect(Collectors.toList());
-        String prevStatus = openCloseList.get(0);
-        for(int i = 1; i < openCloseList.size(); i++) {
-            String type = openCloseList.get(i);
-            if(type.equalsIgnoreCase(Type.OPEN.name()) && prevStatus.equalsIgnoreCase(Type.OPEN.name()))
-                return false;
-            if(type.equalsIgnoreCase(Type.CLOSE.name()) && prevStatus.equalsIgnoreCase(Type.CLOSE.name()))
-                return false;
-            prevStatus = type;
+        if(openCloseList.size() > 0) {
+            String prevStatus = openCloseList.get(0);
+            for (int i = 1; i < openCloseList.size(); i++) {
+                String type = openCloseList.get(i);
+                if (type.equalsIgnoreCase(Type.OPEN.name()) && prevStatus.equalsIgnoreCase(Type.OPEN.name()))
+                    return false;
+                if (type.equalsIgnoreCase(Type.CLOSE.name()) && prevStatus.equalsIgnoreCase(Type.CLOSE.name()))
+                    return false;
+                prevStatus = type;
+            }
         }
         return true;
     }
@@ -57,7 +59,9 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
         Set<String> typeList = openHoursList.stream()
                 .flatMap(list -> list.stream().map(k -> k.getType().toLowerCase()))
                 .collect(Collectors.toSet());
-        return typeList.equals(new HashSet<>(Arrays.asList("open", "close")));
+        if(typeList.size() > 0)
+            return typeList.equals(new HashSet<>(Arrays.asList("open", "close")));
+        return true;
     }
 
     /**
@@ -71,6 +75,8 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
         List<Integer> valueList = openHoursList.stream()
                 .flatMap(list -> list.stream().map(k -> k.getValue()))
                 .collect(Collectors.toList());
-        return valueList.stream().allMatch(i -> i >= 0 && i <= 86399);
+        if(valueList.size() > 0)
+            return valueList.stream().allMatch(i -> i >= 0 && i <= 86399);
+        return true;
     }
 }

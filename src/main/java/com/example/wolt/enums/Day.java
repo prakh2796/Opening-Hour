@@ -21,7 +21,7 @@ public enum Day {
     private static Map<Integer, Day> map = new HashMap<>();
 
     static {
-        for(Day day:Day.values())
+        for(Day day : Day.values())
             map.put(day.dayOfWeek, day);
     }
 
