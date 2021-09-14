@@ -8,8 +8,8 @@ text understood by humans.
 
 ### Assumptions
 
-1. The input JSON shall contain all the 7 days of the week(in any order).
-2. The restaurant follows the format open-close-open i.e., before reopening the restaurant it shall be in a closed state and vice versa.
+1. The input JSON shall contain all the 7 days of the week(in any order). If not then it's an Invalid JSON.
+2. The restaurant follows the format open-close-open i.e., before reopening the restaurant it shall be in a closed state and vice versa.  If not then it's an Invalid JSON.
 
 ### Solution
 
