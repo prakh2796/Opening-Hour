@@ -11,6 +11,7 @@ text understood by humans.
 1. The input JSON shall contain all the 7 days of the week(in any order). If not then it's an Invalid JSON.
 2. The restaurant follows the format open-close-open i.e., before reopening the restaurant it shall be in a closed state and vice versa.  If not then it's an Invalid JSON.
 3. The restaurant doesn't operate for more than 24 hours in a single open-close interval.
+4. The opening hour of the restaurant is always before the closing hour.
 
 ### Solution
 
@@ -203,8 +204,8 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
    then we can have a simple array [open_time,close_time, ...] as a day schedule.
    Also, such an approach would let us avoid mistakes when a client sends
    a request with invalid states changes such as 'close -> close'.
-2. When the closing hour happens to be on the next day, it should accompany 
-   it no matter the day it is. Rather the day should be indicated within the data.
+2. When the closing hour happens to be on the next day, data should be present in the same day itself.
+   We can use a boolean key `nextDay` to represent if the restaurant closes the same day or the next day.
 
 Example JSON for the above thoughts
 ```
