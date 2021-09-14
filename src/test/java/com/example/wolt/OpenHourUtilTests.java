@@ -1,5 +1,6 @@
 package com.example.wolt;
 
+import com.example.wolt.enums.Day;
 import com.example.wolt.utils.OpenHourUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,6 @@ public class OpenHourUtilTests {
 
     @Test
     public void testLookupPreviousDay() {
-        assertEquals("Wednesday", OpenHourUtil.lookupPreviousDay("thursday"));
+        assertEquals(Day.WEDNESDAY.getDayOfWeek(), OpenHourUtil.lookupPreviousDay(Day.THURSDAY.getDayOfWeek()));
     }
 }

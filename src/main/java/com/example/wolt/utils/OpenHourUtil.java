@@ -24,22 +24,9 @@ public class OpenHourUtil {
      * @param day day of the week
      * @return previous day of the week
      */
-    public static String lookupPreviousDay(String day){
-        if(day.equalsIgnoreCase("monday")){
-            return Constants.SUNDAY;
-        }if(day.equalsIgnoreCase("tuesday")){
-            return Constants.MONDAY;
-        }if(day.equalsIgnoreCase("wednesday")){
-            return Constants.TUESDAY;
-        }if(day.equalsIgnoreCase("thursday")){
-            return Constants.WEDNESDAY;
-        }if(day.equalsIgnoreCase("friday")){
-            return Constants.THURSDAY;
-        }if(day.equalsIgnoreCase("saturday")){
-            return Constants.FRIDAY;
-        }if(day.equalsIgnoreCase("sunday")){
-            return Constants.SATURDAY;
-        }
-        return "";
+    public static int lookupPreviousDay(int day) {
+        if(day == 0)
+            return 6;
+        return day-1;
     }
 }

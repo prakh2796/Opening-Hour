@@ -5,6 +5,7 @@ import com.example.wolt.dto.response.ErrorResponse;
 import com.example.wolt.dto.response.ServiceResponse;
 import com.example.wolt.dto.response.SuccessResponse;
 import com.example.wolt.dto.TimeDto;
+import com.example.wolt.enums.Day;
 import com.example.wolt.enums.Type;
 import com.example.wolt.utils.Constants;
 import com.example.wolt.utils.OpenHourUtil;
@@ -52,13 +53,13 @@ public class OpenHourServiceImpl implements IOpenHourService {
         logger.info("JSON Validation Successful");
         LinkedHashMap<String, String> response = new LinkedHashMap<>();
         try {
-            response.put(Constants.MONDAY, processOpenHours(inputTimeDto.getMonday(), Constants.MONDAY, response));
-            response.put(Constants.TUESDAY, processOpenHours(inputTimeDto.getTuesday(), Constants.TUESDAY, response));
-            response.put(Constants.WEDNESDAY, processOpenHours(inputTimeDto.getWednesday(), Constants.WEDNESDAY, response));
-            response.put(Constants.THURSDAY, processOpenHours(inputTimeDto.getThursday(), Constants.THURSDAY, response));
-            response.put(Constants.FRIDAY, processOpenHours(inputTimeDto.getFriday(), Constants.FRIDAY, response));
-            response.put(Constants.SATURDAY, processOpenHours(inputTimeDto.getSaturday(), Constants.SATURDAY, response));
-            response.put(Constants.SUNDAY, processOpenHours(inputTimeDto.getSunday(), Constants.SUNDAY, response));
+            response.put(Day.MONDAY.name(), processOpenHours(inputTimeDto.getMonday(), Day.MONDAY.getDayOfWeek(), response));
+            response.put(Day.TUESDAY.name(), processOpenHours(inputTimeDto.getTuesday(), Day.TUESDAY.getDayOfWeek(), response));
+            response.put(Day.WEDNESDAY.name(), processOpenHours(inputTimeDto.getWednesday(), Day.WEDNESDAY.getDayOfWeek(), response));
+            response.put(Day.THURSDAY.name(), processOpenHours(inputTimeDto.getThursday(), Day.THURSDAY.getDayOfWeek(), response));
+            response.put(Day.FRIDAY.name(), processOpenHours(inputTimeDto.getFriday(), Day.FRIDAY.getDayOfWeek(), response));
+            response.put(Day.SATURDAY.name(), processOpenHours(inputTimeDto.getSaturday(), Day.SATURDAY.getDayOfWeek(), response));
+            response.put(Day.SUNDAY.name(), processOpenHours(inputTimeDto.getSunday(), Day.SUNDAY.getDayOfWeek(), response));
         } catch (Exception e) {
             logger.info("Error Processing JSON");
             return new ResponseEntity<ServiceResponse>(new ErrorResponse(Constants.ERROR_PROCESSING), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,22 +71,22 @@ public class OpenHourServiceImpl implements IOpenHourService {
     /**
      *
      * @param openHoursList Time DTO for a particular day of the week
-     * @param day day of the week
+     * @param dayOfWeek day of the week
      * @param response Human readable open hour format for a particular day
      * @return
      */
-    public String processOpenHours(List<TimeDto> openHoursList, String day, LinkedHashMap<String, String> response) {
-        logger.info("Processing open hour for {}", day);
+    public String processOpenHours(List<TimeDto> openHoursList, int dayOfWeek, LinkedHashMap<String, String> response) {
+        logger.info("Processing open hour for {}", Day.valueOf(dayOfWeek));
         StringBuilder builder = new StringBuilder();
         if (openHoursList.size() > 0) {
             for (int i = 0; i < openHoursList.size(); i++) {
                 if (i == 0 && openHoursList.get(i).getType().equalsIgnoreCase(Type.CLOSE.name())) {
                     logger.info("Previous day opening found");
-                    String previousDay = OpenHourUtil.lookupPreviousDay(day);
-                    String value = response.get(previousDay);
+                    int previousDay = OpenHourUtil.lookupPreviousDay(dayOfWeek);
+                    String value = response.get(Day.valueOf(previousDay).name());
                     value = value.concat(" - " + OpenHourUtil.convertUnixTimeToDate(openHoursList.get(i).getValue()));
 
-                    response.replace(previousDay, value);
+                    response.replace(Day.valueOf(previousDay).name(), value);
                 } else {
                     if (openHoursList.get(i).getType().equalsIgnoreCase(Type.OPEN.name())) {
                         builder.append(OpenHourUtil.convertUnixTimeToDate(openHoursList.get(i).getValue()));

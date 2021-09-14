@@ -9,11 +9,4 @@ public class Constants {
     public static final String INVALID_VALUE = "Value should be in the range [0, 86399]";
     public static final String INVALID_OPEN_CLOSE_HOUR_FORMAT = "The restaurant should follow the format open-close-open.";
     public static final String SOMETHING_WENT_WRONG = "Something went wrong";
-    public static final String MONDAY = "Monday";
-    public static final String TUESDAY = "Tuesday";
-    public static final String WEDNESDAY = "Wednesday";
-    public static final String THURSDAY = "Thursday";
-    public static final String FRIDAY = "Friday";
-    public static final String SATURDAY = "Saturday";
-    public static final String SUNDAY = "Sunday";
 }
