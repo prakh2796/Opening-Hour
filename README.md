@@ -108,7 +108,7 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
 
 1. Install `jdk 1.8` and `maven 3.3.3`
 2. Clone/Download the repository `Opening-Hour`
-3. Open terminal/cmd and run `cd <path_to_Opening-Hour_directory>`
+3. Open terminal/cmd and cd into `Opening-Hour` directory i.e. run `cd <path_to_Opening-Hour_directory>`
 4. run `mvn clean install`
 5. run `mvn spring-boot:run`
 6. Open `http://localhost:8080/swagger-ui/` in browser.
