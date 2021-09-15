@@ -111,7 +111,7 @@ Example: on Mondays a restaurant is open from 9 AM to 8 PM
 3. Open terminal/cmd and cd into `Opening-Hour` directory i.e. run `cd <path_to_Opening-Hour_directory>`
 4. run `mvn clean install`
 5. run `mvn spring-boot:run`
-6. Open `http://localhost:8080/swagger-ui/` in browser.
+6. Open [swagger-ui](http://localhost:8080/swagger-ui/) in browser.
 4. Try out the `/open-hour/convert` POST endpoint in open-hour-controller with the following as inputTimeDto
 
     ```
