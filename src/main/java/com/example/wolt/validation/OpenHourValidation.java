@@ -51,7 +51,7 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
     /**
      *
      * @param inputTimeDto Open Hours DTO
-     * @return true if Open Hours DTO contains type as either open or close
+     * @return true if Open Hours DTO contains type as either open or close(case-sensitive)
      */
     @Override
     public boolean validateType(InputTimeDto inputTimeDto) {
@@ -60,7 +60,9 @@ public class OpenHourValidation implements OpenCloseValidation, TypeValidation, 
                 .flatMap(list -> list.stream().map(k -> k.getType().toLowerCase()))
                 .collect(Collectors.toSet());
         if(typeList.size() > 0)
-            return typeList.equals(new HashSet<>(Arrays.asList("open", "close")));
+            return typeList.equals(new HashSet<>(EnumSet.allOf(Type.class)).stream()
+                    .map(k -> k.name().toLowerCase())
+                    .collect(Collectors.toSet()));
         return true;
     }
 

@@ -12,6 +12,7 @@ text understood by humans.
 2. The restaurant follows the format open-close-open i.e., before reopening the restaurant it shall be in a closed state and vice versa.  If not then it's an Invalid JSON.
 3. The restaurant doesn't operate for more than 24 hours in a single open-close interval.
 4. The opening hour of the restaurant is always before the closing hour.
+5. The key `type` can contain values `open` and `close` (case-sensitive).
 
 ### Solution
 
